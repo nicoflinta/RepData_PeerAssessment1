@@ -48,8 +48,26 @@ library(ggplot2)
 ```
 
 ```r
-setwd("D:/SVN - BIDs/branches/sandpit/flintan/Data Science Coursera/MarkDown")
-activity_data <- read.csv("activity.csv")
+library(data.table)
+```
+
+```
+## Warning: package 'data.table' was built under R version 3.5.1
+```
+
+```r
+fileUrl <- "https://github.com/nicoflinta/RepData_PeerAssessment1/blob/master/activity.zip"
+download.file(fileUrl, destfile = paste0(getwd(), '/activity.zip'))
+unzip("activity.zip", exdir = "data")
+```
+
+```
+## Warning in unzip("activity.zip", exdir = "data"): error 1 in extracting
+## from zip file
+```
+
+```r
+activity_data <- data.table::fread(input = "data/activity.csv")
 activity_data_tidy <- subset(activity_data, !is.na(steps))
 activity_data_tidy$date <- as.Date(activity_data_tidy$date, "%Y-%m-%d")
 ```
